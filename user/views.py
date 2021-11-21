@@ -1,24 +1,38 @@
 from rest_framework import serializers, viewsets, permissions, status
+from rest_framework import response
 from .models import MyUser
-from .serializers import LoginSerializer, RegisterSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-
-# Create your views here.
-
+from django.contrib.auth import authenticate
 
 class LoginView(viewsets.ModelViewSet):
     queryset = MyUser.objects.all()
     serializer_class = LoginSerializer
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        headers = self.get_success_headers(serializer.data)
-        return Response('sssss', status=status.HTTP_200_OK, headers=headers)
 
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(
+            request=request,
+            username=username,
+            password=password,
+        )
+
+        if not user:
+            return Response({
+                'message': 'user not found',
+                'error': 'not_found'
+            }, status.HTTP_404_NOT_FOUND)
+        else:
+            token = Token.objects.get(user=user)
+            # token = Token.objects.get(username=username)
+            return Response({"token": token.key, "user": UserSerializer(user).data}, status.HTTP_200_OK)
 
 class RegisterView(viewsets.ModelViewSet):
     queryset = MyUser.objects.all()
@@ -26,12 +40,11 @@ class RegisterView(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
-        print('1111111111111111111111111111111111')
         password = request.data.get("password")
         username = request.data.get("username")
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=False)
-        print('sssssssssssss', MyUser.objects.filter(username=username))
+
         if MyUser.objects.filter(username=username).exists():
             return Response(
                 {
@@ -41,9 +54,7 @@ class RegisterView(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user = serializer.save()
-
         token = Token.objects.create(user=user)
-
         headers = self.get_success_headers(serializer.data)
         user.set_password(password)
         user.save()

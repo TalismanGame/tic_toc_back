@@ -28,4 +28,11 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
         fields = ["username", "password", "token"]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = MyUser
+        fields = ["username", "email"]
      

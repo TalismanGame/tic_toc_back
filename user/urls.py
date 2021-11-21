@@ -18,6 +18,6 @@ from django.urls import path
 from .views import LoginView, RegisterView
 
 urlpatterns = [
-    path('auth/login', LoginView.as_view({'post': 'create'}), name = 'login'),
-    path('auth/register', RegisterView.as_view({'post': 'create'}), name = 'register')
+    path('auth/login/', LoginView.as_view({'post': 'create'}), name = 'login'),
+    path('auth/register/', RegisterView.as_view({'post': 'create'}), name = 'register')
 ]
