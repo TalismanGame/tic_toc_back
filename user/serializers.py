@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import MyUser
 
 class RegisterSerializer(serializers.ModelSerializer):
-    
     email = serializers.EmailField(required=False)
     class Meta:
         model = MyUser
