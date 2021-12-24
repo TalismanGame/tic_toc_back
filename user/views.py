@@ -27,7 +27,7 @@ class LoginView(viewsets.ModelViewSet):
         if not user:
             return Response({
                 'message': 'user not found',
-                'error': 'not_found'
+                'error': 'user_not_found'
             }, status.HTTP_404_NOT_FOUND)
         else:
             token = Token.objects.get(user=user)
