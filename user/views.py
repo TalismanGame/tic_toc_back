@@ -61,8 +61,8 @@ class RegisterView(viewsets.ModelViewSet):
 
         return Response(
             {
-                "message": "done",
-                "token is": token.key
+                "token": token.key,
+                "user": UserSerializer(user).data
             },
             status=status.HTTP_201_CREATED,
             headers=headers,
