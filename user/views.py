@@ -59,7 +59,7 @@ class RegisterView(viewsets.ModelViewSet):
         user.set_password(password)
         user.save()
 
-        # junk comment
+        # seems i did fix my github commit issue
 
         return Response(
             {
