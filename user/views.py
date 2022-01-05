@@ -59,6 +59,8 @@ class RegisterView(viewsets.ModelViewSet):
         user.set_password(password)
         user.save()
 
+        # seems i did fix my github commit issue
+
         return Response(
             {
                 "token": token.key,
