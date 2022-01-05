@@ -59,6 +59,8 @@ class RegisterView(viewsets.ModelViewSet):
         user.set_password(password)
         user.save()
 
+        # junk comment
+
         return Response(
             {
                 "token": token.key,
