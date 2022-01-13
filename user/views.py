@@ -1,6 +1,7 @@
 from rest_framework import serializers, viewsets, permissions, status
 from rest_framework import response
 from .models import MyUser
+from game.models import Player
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -57,6 +58,7 @@ class RegisterView(viewsets.ModelViewSet):
         token = Token.objects.create(user=user)
         headers = self.get_success_headers(serializer.data)
         user.set_password(password)
+        Player.objects.create(alias=username)
         user.save()
 
         return Response(
