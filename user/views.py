@@ -1,5 +1,4 @@
-from rest_framework import serializers, viewsets, permissions, status
-from rest_framework import response
+from rest_framework import viewsets, permissions, status
 from .models import MyUser
 from game.models import Player
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
