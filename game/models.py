@@ -13,11 +13,11 @@ class Player(models.Model):
 class Game(models.Model):
     gameBoard = ArrayField(
          models.CharField(max_length=1),
-         default=[
+         default=list([
             None, None, None,
             None, None, None,
             None, None, None
-        ],
+         ]),
         size=9
     )
     status = models.CharField(max_length=32, null=True)
