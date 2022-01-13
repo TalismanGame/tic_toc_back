@@ -15,9 +15,10 @@ Including another URLconf
 """
 
 from django.urls import path
-# from .views import LoginView, RegisterView
+from .views import CreateGameView
 
 urlpatterns = [
+    path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create new game')
     # path('auth/login/', LoginView.as_view({'post': 'create'}), name = 'login'),
     # path('auth/register/', RegisterView.as_view({'post': 'create'}), name = 'register')
 ]
