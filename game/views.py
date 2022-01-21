@@ -23,5 +23,5 @@ class CreateGameView(viewsets.ModelViewSet):
 
         return Response({
                 'message': 'game created',
-                'invite code': inviteCode
+                'invite_code': inviteCode
             }, status.HTTP_201_CREATED)
