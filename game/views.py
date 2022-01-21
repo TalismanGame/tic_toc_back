@@ -14,7 +14,10 @@ class CreateGameView(viewsets.ModelViewSet):
 
         user = request.user
         myPlayerName = Player.objects.get(alias=user.username)
-        Game.objects.create(playerX=myPlayerName)
+        Game.objects.create(
+            playerX=myPlayerName,
+            
+        )
 
         return Response({
                 'message': 'here i am creating a game:' + ' ' + user.username,

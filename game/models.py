@@ -20,7 +20,7 @@ class Game(models.Model):
          ]),
         size=9
     )
-    status = models.CharField(max_length=32, null=True)
+    status = models.CharField(max_length=32, default='waiting')
     playerX = models.ForeignKey(Player, related_name="games_created", on_delete=models.CASCADE, null=True)
     playerO = models.ForeignKey(Player, related_name="games_invited", on_delete=models.CASCADE, null=True)
     nextPlayer = models.CharField(max_length=1, default='X')
