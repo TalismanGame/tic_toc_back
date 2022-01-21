@@ -12,15 +12,16 @@ class CreateGameView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        
         user = request.user
+        inviteCode = GenerateInviteCode()
         myPlayerName = Player.objects.get(alias=user.username)
         Game.objects.create(
             playerX=myPlayerName,
-            inviteCode = GenerateInviteCode()
+            xState = 'joined',
+            inviteCode = inviteCode
         )
 
         return Response({
-                'message': 'here i am creating a game:' + ' ' + user.username,
-                'error': 'user_not_found'
-            }, status.HTTP_404_NOT_FOUND)
+                'message': 'game created',
+                'invite code': inviteCode
+            }, status.HTTP_201_CREATED)

@@ -30,4 +30,4 @@ class Game(models.Model):
     inviteCode = models.CharField(unique=True, max_length=10, null=True)
 
     def __str__(self):
-        return str(self.playerX) + " " + str(self.playerO)
+        return str(self.playerX) + " And " + str(self.playerO)
