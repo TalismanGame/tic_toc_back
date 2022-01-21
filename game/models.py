@@ -27,6 +27,7 @@ class Game(models.Model):
     xState =  models.CharField(max_length=16, default='not_ready')
     oState =  models.CharField(max_length=16, default='not_ready')
     winner = models.CharField(max_length=1, null=True)
+    inviteCode = models.CharField(unique=True, max_length=8, null=True)
 
     def __str__(self):
         return str(self.playerX) + " " + str(self.playerO)
