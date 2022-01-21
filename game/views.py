@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions, status
 from .models import Player, Game
 from .serializers import CreateGameSerializer
 from rest_framework.response import Response
+from .utils import GenerateInviteCode
 
 # Create your views here.
 
@@ -11,12 +12,12 @@ class CreateGameView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-
+        
         user = request.user
         myPlayerName = Player.objects.get(alias=user.username)
         Game.objects.create(
             playerX=myPlayerName,
-            
+            inviteCode = GenerateInviteCode()
         )
 
         return Response({
