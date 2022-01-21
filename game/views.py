@@ -10,7 +10,9 @@ class CreateGameView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
+        user = request.user
+        
         return Response({
-                'message': 'here i am',
+                'message': 'here i am creating a game:' + ' ' + user.username,
                 'error': 'user_not_found'
             }, status.HTTP_404_NOT_FOUND)
