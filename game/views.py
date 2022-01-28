@@ -1,7 +1,7 @@
 from ast import alias
 from rest_framework import viewsets, permissions, status
 from .models import Player, Game
-from .serializers import CreateGameSerializer
+from .serializers import CreateGameSerializer, JoinGameSerializer
 from rest_framework.response import Response
 from .utils import GenerateInviteCode
 
@@ -25,3 +25,20 @@ class CreateGameView(viewsets.ModelViewSet):
                 'message': 'game created',
                 'invite_code': inviteCode
             }, status.HTTP_201_CREATED)
+
+class JoinGameView(viewsets.ModelViewSet):
+    serializer_class = JoinGameSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        user = request.user
+        inviteCode = request.data.get('inviteCode')
+        myPlayerName = Player.objects.get(alias=user.username)
+        
+        return Response({
+            'message': 'you joined the game: ' + inviteCode
+        }, status.HTTP_200_OK)

@@ -15,8 +15,9 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import CreateGameView
+from .views import CreateGameView, JoinGameView
 
 urlpatterns = [
-    path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create new game')
+    path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create new game'),
+    path('game/join', JoinGameView.as_view({'post': 'create'}), name='join to new game')
 ]
