@@ -31,6 +31,7 @@ class JoinGameView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     #this is not working. it should update game model and make it ready to start the game. 
+    # ********* the logic I have to use is witten on board! :) ********* #
     def create(self, request, *args, **kwargs):
 
         serializer = self.get_serializer(data=request.data)
