@@ -17,9 +17,15 @@ class JoinGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = '__all__'
+        
+        # ******** 
+        # this is a good way of handing errors and validate data in 
+        # serializer than setup custom error response. 
+        # so use this and make sure you config all in settings as well 
+        # ********
         extra_kwargs = {
             'inviteCode': {
                 'required': True,
-                "min_length": 3,
+                "min_length": 9,
             }
         }
