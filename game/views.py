@@ -1,9 +1,12 @@
 from ast import alias
+from asyncore import write
 from rest_framework import viewsets, permissions, status
 from .models import Player, Game
 from .serializers import CreateGameSerializer, JoinGameSerializer
 from rest_framework.response import Response
 from .utils import GenerateInviteCode
+from django.shortcuts import get_object_or_404
+
 
 # Create your views here.
 
@@ -33,14 +36,25 @@ class JoinGameView(viewsets.ModelViewSet):
 
     #this is not working. it should update game model and make it ready to start the game. 
     # ********* the logic I have to use is witten on board! :) ********* #
-    def create(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
+        # ******** question?? why do write queryset. how it helps us???? *******
+        # queryset = Game.objects.all()
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
         user = request.user
         inviteCode = request.data.get('inviteCode')
-        myPlayerName = Player.objects.get(alias=user.username)
+        # myPlayerName = Player.objects.get(alias=user.username)
+
+        # targetGame = get_object_or_404(Game, inviteCode=inviteCode)
+        
+        # targetGame.objects.update(
+        #     playerO=myPlayerName,
+        #     oState = 'joined',
+        #     status = 'ready'
+        # )
+        # targetGame.save()
         
         return Response({
             'message': 'you joined the game: ' + inviteCode
