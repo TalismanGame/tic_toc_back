@@ -48,7 +48,7 @@ class JoinGameView(viewsets.ModelViewSet):
         myPlayerName = Player.objects.get(alias=user.username)
 
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
-        
+
         # there should be a way to handle this way find it
         # Game.objects.update(
         #     id = targetGame,
@@ -62,6 +62,8 @@ class JoinGameView(viewsets.ModelViewSet):
 
         targetGame.save()
         
+        # ******** question?? how to send game data in response??? *******
         return Response({
-            'message': 'you joined the game: ' + inviteCode
+            'message': 'game started!',
+            # 'data': targetGame.playerX
         }, status.HTTP_200_OK)
