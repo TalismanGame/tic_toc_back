@@ -8,6 +8,7 @@ from .utils import GenerateInviteCode
 # Create your views here.
 
 class CreateGameView(viewsets.ModelViewSet):
+    # *************** do I really need this serializer here? I am not using it *****************
     serializer_class = CreateGameSerializer
     permission_classes = [permissions.IsAuthenticated]
 
