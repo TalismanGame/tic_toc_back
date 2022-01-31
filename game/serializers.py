@@ -12,20 +12,22 @@ class CreateGameSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class JoinGameSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Game
-        fields = '__all__'
+class JoinGameSerializer(serializers.Serializer):
+    # use model serializers to find object and pass instance to view and change it
+    inviteCode = serializers.CharField(min_length=9, required=True)
+
+    # class Meta:
+    #     model = Game
+    #     fields = ['inviteCode']
         
-        # ******** 
-        # this is a good way of handing errors and validate data in 
-        # serializer than setup custom error response. 
-        # so use this and make sure you config all in settings as well 
-        # ********
-        extra_kwargs = {
-            'inviteCode': {
-                'required': True,
-                "min_length": 9,
-            }
-        }
+    #     # ******** 
+    #     # this is a good way of handing errors and validate data in 
+    #     # serializer than setup custom error response. 
+    #     # so use this and make sure you config all in settings as well 
+    #     # ********
+    #     extra_kwargs = {
+    #         'inviteCode': {
+    #             'required': True,
+    #             "min_length": 9,
+    #         }
+    #     }

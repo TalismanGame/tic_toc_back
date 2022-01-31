@@ -45,16 +45,22 @@ class JoinGameView(viewsets.ModelViewSet):
         
         user = request.user
         inviteCode = request.data.get('inviteCode')
-        # myPlayerName = Player.objects.get(alias=user.username)
+        myPlayerName = Player.objects.get(alias=user.username)
 
-        # targetGame = get_object_or_404(Game, inviteCode=inviteCode)
+        targetGame = get_object_or_404(Game, inviteCode=inviteCode)
         
-        # targetGame.objects.update(
+        # there should be a way to handle this way find it
+        # Game.objects.update(
+        #     id = targetGame,
         #     playerO=myPlayerName,
         #     oState = 'joined',
-        #     status = 'ready'
+        #     status = 'ready',
         # )
-        # targetGame.save()
+        targetGame.playerO = myPlayerName
+        targetGame.oState = 'joined'
+        targetGame.status = 'ready'
+
+        targetGame.save()
         
         return Response({
             'message': 'you joined the game: ' + inviteCode

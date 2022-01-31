@@ -19,5 +19,5 @@ from .views import CreateGameView, JoinGameView
 
 urlpatterns = [
     path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create new game'),
-    path('game/join', JoinGameView.as_view({'post': 'create'}), name='join to new game')
+    path('game/join', JoinGameView.as_view({'put': 'update'}), name='join to new game')
 ]
