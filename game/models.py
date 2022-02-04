@@ -16,7 +16,6 @@ class Player(models.Model):
         (LEAVED, 'LEAVED'),
     ]
 
-
     alias = models.CharField(max_length=256)
 
     def __str__(self):
