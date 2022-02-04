@@ -20,5 +20,14 @@ from .views import CreateGameView, JoinGameView, GameStateView
 urlpatterns = [
     path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create new game'),
     path('game/join', JoinGameView.as_view({'put': 'update'}), name='join to new game'),
+    
+    # # ******** question?? I also can use this way of handing data in get API. is it secure??? *******
+    # path(
+    #     "instruments/<str:symbol>/",
+    #     GetAnInstrument.as_view({"get": "retrieve"}),
+    #     name="get-an-instrument",
+    # )
+    # def retrieve(self, *args, **kwargs):
+    #     instrument_symbol = kwargs.get("symbol", None)
     path('game/status', GameStateView.as_view({'get': 'retrieve'}), name='get game status')
 ]
