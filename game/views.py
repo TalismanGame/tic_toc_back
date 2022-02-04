@@ -74,7 +74,7 @@ class GameStateView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def retrieve(self, request, *args, **kwargs):
-        inviteCode = request.data.get('inviteCode')
+        inviteCode = kwargs.get("code", None)
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
 
         return Response({

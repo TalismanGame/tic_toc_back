@@ -29,5 +29,5 @@ urlpatterns = [
     # )
     # def retrieve(self, *args, **kwargs):
     #     instrument_symbol = kwargs.get("symbol", None)
-    path('game/status', GameStateView.as_view({'get': 'retrieve'}), name='get game status')
+    path('game/status/<str:code>/', GameStateView.as_view({'get': 'retrieve'}), name='get game status')
 ]
