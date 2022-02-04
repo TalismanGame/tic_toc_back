@@ -21,7 +21,8 @@ class CreateGameView(viewsets.ModelViewSet):
         myPlayerName = Player.objects.get(alias=user.username)
         Game.objects.create(
             playerX=myPlayerName,
-            xState = 'joined',
+            xState = Player.JOINED,
+            oState = Player.NOT_READY,
             inviteCode = inviteCode,
             status = Game.WAITING
         )
@@ -58,7 +59,7 @@ class JoinGameView(viewsets.ModelViewSet):
         #     status = 'ready',
         # )
         targetGame.playerO = myPlayerName
-        targetGame.oState = 'joined'
+        targetGame.oState = Player.JOINED
         targetGame.status = Game.READY
 
         targetGame.save()

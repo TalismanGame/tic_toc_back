@@ -6,6 +6,17 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Player(models.Model):
+    NOT_READY = 0
+    JOINED = 1
+    LEAVED = 2
+
+    PLAYER_STATE = [
+        (NOT_READY, 'NOT_READY'),
+        (JOINED, 'JOINED'),
+        (LEAVED, 'LEAVED'),
+    ]
+
+
     alias = models.CharField(max_length=256)
 
     def __str__(self):
@@ -37,8 +48,8 @@ class Game(models.Model):
     playerX = models.ForeignKey(Player, related_name="games_created", on_delete=models.CASCADE, null=True)
     playerO = models.ForeignKey(Player, related_name="games_invited", on_delete=models.CASCADE, null=True)
     nextPlayer = models.CharField(max_length=1, default='X')
-    xState =  models.CharField(max_length=16, default='not_ready')
-    oState =  models.CharField(max_length=16, default='not_ready')
+    xState =  models.CharField(choices=Player.PLAYER_STATE, max_length=16, default='NOT_READY')
+    oState =  models.CharField(choices=Player.PLAYER_STATE, max_length=16, default='NOT_READY')
     winner = models.CharField(max_length=1, null=True)
     inviteCode = models.CharField(unique=True, max_length=10, null=True)
 
