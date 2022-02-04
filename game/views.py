@@ -51,7 +51,7 @@ class JoinGameView(viewsets.ModelViewSet):
 
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
 
-        # there should be a way to handle this way find it
+        # ******** question?? there should be a way to handle this way find it *******
         # Game.objects.update(
         #     id = targetGame,
         #     playerO=myPlayerName,
@@ -68,4 +68,15 @@ class JoinGameView(viewsets.ModelViewSet):
         return Response({
             'message': 'game started!',
             # 'data': targetGame.playerX
+        }, status.HTTP_200_OK)
+
+class GameStateView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def retrieve(self, request, *args, **kwargs):
+        inviteCode = request.data.get('inviteCode')
+        targetGame = get_object_or_404(Game, inviteCode=inviteCode)
+
+        return Response({
+            "status": targetGame.status
         }, status.HTTP_200_OK)
