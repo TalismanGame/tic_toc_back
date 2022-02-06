@@ -7,6 +7,7 @@ admin.site.register(Player, PlayerAdmin)
 
 
 class GameAdmin(admin.ModelAdmin):
+    #question why this fields get empty after i add choices to them
     list_display = ["playerX", "xState", "playerO", "oState", "status", "inviteCode"]
     search_fields = ['playerX__alias', "playerO__alias"]
 
