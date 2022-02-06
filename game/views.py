@@ -2,7 +2,7 @@ from ast import alias
 from asyncore import write
 from rest_framework import viewsets, permissions, status
 from .models import Player, Game
-from .serializers import CreateGameSerializer, JoinGameSerializer
+from .serializers import CreateGameSerializer, JoinGameSerializer, GetGameDataSerializer
 from rest_framework.response import Response
 from .utils import GenerateInviteCode
 from django.shortcuts import get_object_or_404
@@ -80,5 +80,15 @@ class GameStateView(viewsets.ModelViewSet):
         return Response({
             "status": targetGame.status
         }, status.HTTP_200_OK)
+
+class GetGameDataView(viewsets.ModelViewSet):
+    serializer_class = GetGameDataSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def retrieve(self, request, *args, **kwargs):
+        inviteCode = kwargs.get("code", None)
+        targetGame = get_object_or_404(Game, inviteCode=inviteCode)
+        serializer = self.get_serializer(targetGame)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 

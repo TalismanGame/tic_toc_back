@@ -30,3 +30,9 @@ class JoinGameSerializer(serializers.Serializer):
     #             "min_length": 9,
     #         }
     #     }
+
+class GetGameDataSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Game
+        fields = '__all__'

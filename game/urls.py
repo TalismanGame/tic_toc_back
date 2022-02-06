@@ -15,11 +15,11 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import CreateGameView, JoinGameView, GameStateView
+from .views import CreateGameView, JoinGameView, GameStateView, GetGameDataView
 
 urlpatterns = [
-    path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create new game'),
-    path('game/join', JoinGameView.as_view({'put': 'update'}), name='join to new game'),
+    path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create-new-game'),
+    path('game/join', JoinGameView.as_view({'put': 'update'}), name='join-to-new-game'),
     
     # # ******** question?? I also can use this way of handing data in get API. is it secure??? *******
     # path(
@@ -29,5 +29,6 @@ urlpatterns = [
     # )
     # def retrieve(self, *args, **kwargs):
     #     instrument_symbol = kwargs.get("symbol", None)
-    path('game/status/<str:code>/', GameStateView.as_view({'get': 'retrieve'}), name='get game status'),
+    path('game/status/<str:code>/', GameStateView.as_view({'get': 'retrieve'}), name='get-game-status'),
+    path('game/data/<str:code>/', GetGameDataView.as_view({'get': 'retrieve'}), name='get-game-all-data'),
 ]
