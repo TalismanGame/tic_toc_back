@@ -80,3 +80,18 @@ class GameStateView(viewsets.ModelViewSet):
         return Response({
             "status": targetGame.status
         }, status.HTTP_200_OK)
+
+class GameDataView(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+
+    def retrieve(self, request, *args, **kwargs):
+        inviteCode = kwargs.get("code", None)
+
+        queryset = Game.objects.filter(inviteCode=inviteCode)
+        data = self.get_serializer(queryset, many=False).data
+
+        return Response({
+            data
+        }, status.HTTP_200_OK)
+

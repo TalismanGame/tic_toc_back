@@ -11,7 +11,6 @@ class CreateGameSerializer(serializers.ModelSerializer):
         model = Game
         fields = '__all__'
 
-
 class JoinGameSerializer(serializers.Serializer):
     # use model serializers to find object and pass instance to view and change it
     inviteCode = serializers.CharField(min_length=9, required=True)
