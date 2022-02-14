@@ -15,7 +15,19 @@ class PlayerAdmin(admin.ModelAdmin):
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
     #question why this fields get empty after i add choices to them
-    list_display = ["playerX", "xState", "playerO", "oState", "status", "inviteCode"]
+    list_display = ["playerX", "get_x_state", "playerO", "get_o_state", "get_status", "inviteCode"]
     search_fields = ['playerX__alias', "playerO__alias"]
+
+    def get_x_state(self, obj):
+        return obj.get_xState_display()
+    get_x_state.short_description = 'x_state'
+
+    def get_o_state(self, obj):
+        return obj.get_oState_display()
+    get_o_state.short_description = 'o_state'
+
+    def get_status(self, obj):
+        return obj.get_status_display()
+    get_status.short_description = 'status'
 
 # admin.site.register(Game, GameAdmin)
