@@ -31,6 +31,11 @@ class JoinGameSerializer(serializers.Serializer):
     #         }
     #     }
 
+# class UpdateGameDataSerializer(serializers.Serializer):
+#     inviteCode = serializers.CharField(min_length=9, required=True)
+    # this is wrong
+
+
 class GetGameDataSerializer(serializers.ModelSerializer):
     
     class Meta:

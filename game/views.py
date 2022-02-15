@@ -70,6 +70,26 @@ class JoinGameView(viewsets.ModelViewSet):
             # 'data': targetGame.playerX
         }, status.HTTP_200_OK)
 
+class UpdateGameData(viewsets.ModelViewSet):
+    # serializer_class = UpdateGameDataSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        # serializer = self.get_serializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+
+        inviteCode = request.data.get('code')
+        board = request.data.get('board')
+        targetGame = get_object_or_404(Game, inviteCode=inviteCode)
+
+        targetGame.gameBoard = board
+        targetGame.save()
+
+        return Response({
+            'message': 'game updated! as hell',
+        }, status.HTTP_200_OK)
+
+
 class GameStateView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -90,5 +110,6 @@ class GetGameDataView(viewsets.ModelViewSet):
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
         serializer = self.get_serializer(targetGame)
         return Response(serializer.data, status=status.HTTP_200_OK)
+        
 
 
