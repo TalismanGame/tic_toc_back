@@ -51,11 +51,11 @@ class Game(models.Model):
     ]
 
     gameBoard = ArrayField(
-         models.CharField(max_length=1),
+         models.PositiveIntegerField(),
          default=list([
-            None, None, None,
-            None, None, None,
-            None, None, None
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0
          ]),
         size=9
     )
