@@ -31,6 +31,7 @@ class Game(models.Model):
     PLAYER_O = 1
 
     DRAW = 3
+    NOT_DISCLOSED = 4
 
     GAME_STATE = [
         (WAITING, 'WAITING'),
@@ -48,6 +49,7 @@ class Game(models.Model):
         (PLAYER_X, 'PLAYER_X'),
         (PLAYER_O, 'PLAYER_O'),
         (DRAW, 'DRAW'),
+        (NOT_DISCLOSED, 'NOT_DISCLOSED'),
     ]
 
     gameBoard = ArrayField(
@@ -65,7 +67,7 @@ class Game(models.Model):
     nextPlayer = models.PositiveIntegerField(choices=PLAYERS, default=0)
     xState =  models.PositiveIntegerField(choices=Player.PLAYER_STATE, default=0)
     oState =  models.PositiveIntegerField(choices=Player.PLAYER_STATE, default=0)
-    winner = models.PositiveIntegerField(choices=WIN_OPTIONS, null=True)
+    winner = models.PositiveIntegerField(choices=WIN_OPTIONS, default=4)
     inviteCode = models.CharField(unique=True, max_length=10, null=True)
 
     def __str__(self):
