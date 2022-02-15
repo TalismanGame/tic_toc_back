@@ -37,7 +37,9 @@ class JoinGameSerializer(serializers.Serializer):
 
 
 class GetGameDataSerializer(serializers.ModelSerializer):
-    
+    playerX = serializers.StringRelatedField()
+    playerO = serializers.StringRelatedField()
+
     class Meta:
         model = Game
         fields = '__all__'
