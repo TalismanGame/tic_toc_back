@@ -45,8 +45,8 @@ class Game(models.Model):
     ]
 
     WIN_OPTIONS  = [
-        (PLAYER_X, 'X'),
-        (PLAYER_O, 'O'),
+        (PLAYER_X, 'PLAYER_X'),
+        (PLAYER_O, 'PLAYER_O'),
         (DRAW, 'DRAW'),
     ]
 
@@ -59,13 +59,13 @@ class Game(models.Model):
          ]),
         size=9
     )
-    status = models.CharField(choices=GAME_STATE, max_length=32)
+    status = models.PositiveIntegerField(choices=GAME_STATE)
     playerX = models.ForeignKey(Player, related_name="games_created", on_delete=models.CASCADE, null=True)
     playerO = models.ForeignKey(Player, related_name="games_invited", on_delete=models.CASCADE, null=True)
-    nextPlayer = models.CharField(choices=PLAYERS, max_length=1, default='X')
-    xState =  models.CharField(choices=Player.PLAYER_STATE, max_length=16, default='NOT_READY')
-    oState =  models.CharField(choices=Player.PLAYER_STATE, max_length=16, default='NOT_READY')
-    winner = models.CharField(choices=WIN_OPTIONS, max_length=1, null=True)
+    nextPlayer = models.PositiveIntegerField(choices=PLAYERS, default=0)
+    xState =  models.PositiveIntegerField(choices=Player.PLAYER_STATE, default=0)
+    oState =  models.PositiveIntegerField(choices=Player.PLAYER_STATE, default=0)
+    winner = models.PositiveIntegerField(choices=WIN_OPTIONS, null=True)
     inviteCode = models.CharField(unique=True, max_length=10, null=True)
 
     def __str__(self):
