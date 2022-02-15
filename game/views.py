@@ -82,10 +82,12 @@ class UpdateGameData(viewsets.ModelViewSet):
         board = request.data.get('board')
         nextPlayer = request.data.get('nextPlayer')
         winner = request.data.get('winner')
+        winCondition = request.data.get('winCondition')
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
         targetGame.gameBoard = board
         targetGame.nextPlayer = nextPlayer
         targetGame.winner = winner
+        targetGame.winCondition = winCondition
         targetGame.save()
         return Response({
             'message': 'game updated! as hell',
