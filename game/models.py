@@ -61,6 +61,12 @@ class Game(models.Model):
          ]),
         size=9
     )
+    winCondition = ArrayField(
+        models.PositiveIntegerField(),
+        default=list([
+            0, 0, 0
+        ])
+    )
     status = models.PositiveIntegerField(choices=GAME_STATE)
     playerX = models.ForeignKey(Player, related_name="games_created", on_delete=models.CASCADE, null=True)
     playerO = models.ForeignKey(Player, related_name="games_invited", on_delete=models.CASCADE, null=True)
