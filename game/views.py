@@ -80,11 +80,11 @@ class UpdateGameData(viewsets.ModelViewSet):
 
         inviteCode = request.data.get('code')
         board = request.data.get('board')
+        nextPlayer = request.data.get('nextPlayer')
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
-
         targetGame.gameBoard = board
+        targetGame.nextPlayer = nextPlayer
         targetGame.save()
-
         return Response({
             'message': 'game updated! as hell',
         }, status.HTTP_200_OK)
