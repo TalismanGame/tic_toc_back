@@ -78,7 +78,7 @@ class LeaveGameView(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        inviteCode = request.data.get('inviteCode')
+        inviteCode = request.data.get('code')
         myTurnInGame = request.data.get('myTurnInGame')
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
         
