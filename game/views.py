@@ -2,7 +2,7 @@ from ast import alias
 from asyncore import write
 from rest_framework import viewsets, permissions, status
 from .models import Player, Game
-from .serializers import CreateGameSerializer, JoinGameSerializer, GetGameDataSerializer
+from .serializers import CreateGameSerializer, JoinGameSerializer, GetGameDataSerializer, LeaveGameSerializer
 from rest_framework.response import Response
 from .utils import GenerateInviteCode
 from django.shortcuts import get_object_or_404
@@ -69,6 +69,32 @@ class JoinGameView(viewsets.ModelViewSet):
             'message': 'game started!',
             # 'data': targetGame.playerX
         }, status.HTTP_200_OK)
+
+class LeaveGameView(viewsets.ModelViewSet):
+    serializer_class = LeaveGameSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        inviteCode = request.data.get('inviteCode')
+        myTurnInGame = request.data.get('myTurnInGame')
+        targetGame = get_object_or_404(Game, inviteCode=inviteCode)
+        
+        if myTurnInGame == 'x':
+            targetGame.xState = Player.LEAVED
+            targetGame.status = Game.WAITING
+        elif myTurnInGame == 'o':
+            targetGame.oState = Player.LEAVED
+            targetGame.status = Game.WAITING    
+        targetGame.save()
+
+        return Response({
+            'message': 'you leave the game',
+            # 'data': targetGame.playerX
+        }, status.HTTP_200_OK)
+
 
 class UpdateGameData(viewsets.ModelViewSet):
     # serializer_class = UpdateGameDataSerializer

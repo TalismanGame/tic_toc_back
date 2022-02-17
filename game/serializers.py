@@ -35,6 +35,9 @@ class JoinGameSerializer(serializers.Serializer):
 #     inviteCode = serializers.CharField(min_length=9, required=True)
     # this is wrong
 
+class LeaveGameSerializer(serializers.Serializer):
+    inviteCode = serializers.CharField(min_length=9, required=True)
+
 
 class GetGameDataSerializer(serializers.ModelSerializer):
     playerX = serializers.StringRelatedField()
