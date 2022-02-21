@@ -35,7 +35,6 @@ class CreateGameView(viewsets.ModelViewSet):
 class JoinGameView(viewsets.ModelViewSet):
     serializer_class = JoinGameSerializer
     permission_classes = [permissions.IsAuthenticated]
-
     #this is not working. it should update game model and make it ready to start the game. 
     # ********* the logic I have to use is witten on board! :) ********* #
     def update(self, request, *args, **kwargs):
@@ -77,7 +76,6 @@ class LeaveGameView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         inviteCode = request.data.get('inviteCode')
         myTurnInGame = request.data.get('myTurnInGame')
         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
