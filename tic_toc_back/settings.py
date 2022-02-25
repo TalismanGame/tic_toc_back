@@ -75,11 +75,13 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    'http://localhost:3000', 
+    'http://194.5.192.251:8000'
 ] 
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:3000',
+    'http://194.5.192.251:8000'
 ]
 
 ROOT_URLCONF = 'tic_toc_back.urls'
