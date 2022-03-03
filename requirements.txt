@@ -26,3 +26,4 @@ six==1.16.0
 sqlparse==0.4.2
 urllib3==1.26.7
 zipp==3.6.0
+channels==3.0.4
