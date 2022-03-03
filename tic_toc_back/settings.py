@@ -107,7 +107,6 @@ WSGI_APPLICATION = 'tic_toc_back.wsgi.application'
 
 # ******** question As i add asgi here should wsgi remain or what? ********
 ASGI_APPLICATION = "tic_toc_back.asgi.application"
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
