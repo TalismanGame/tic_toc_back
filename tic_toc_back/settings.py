@@ -107,6 +107,14 @@ WSGI_APPLICATION = 'tic_toc_back.wsgi.application'
 
 # ******** question As i add asgi here should wsgi remain or what? ********
 ASGI_APPLICATION = "tic_toc_back.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

@@ -1,34 +1,35 @@
 import asyncio
 import json
 from channels.consumer import AsyncConsumer
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import WebsocketConsumer, AsyncJsonWebsocketConsumer
 from random import randint
 from time import sleep
-
+from asgiref.sync import async_to_sync
 
 
 #*********** question here I should define game status and echos it whenever it changed ********
-class GameStatusConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
+class GameStatusConsumer(AsyncJsonWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
 
-    def disconnect(self, close_code):
-        pass
+        # async def test_can_send_and_receive_messages(self, settings):
+        #     settings.CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
+        #     communicator = WebsocketCommunicator(
+        #         application=application,
+        #         path='/taxi/'
+        #     )
+        #     await communicator.connect()
+        #     message = {
+        #         'type': 'echo.message',
+        #         'data': 'This is a test message.',
+        #     }
+        #     await communicator.send_json_to(message)
+        #     response = await communicator.receive_json_from()
+        #     assert response == message
+        #     await communicator.disconnect()
 
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        gameStatus = text_data_json['gameStatus']
-
-        self.send(text_data=json.dumps({
-            'gameStatus': gameStatus
-        }))
-
-
-
-
-
-
-
+    async def disconnect(self, code):
+        await super().disconnect(code)
 
 
 
