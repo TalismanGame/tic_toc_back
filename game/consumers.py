@@ -31,11 +31,17 @@ class GameStatusConsumer(AsyncJsonWebsocketConsumer):
         #     await self.close()
 
     async def receive_json(self, content, **kwargs):
-        code = content["code"]
-        self.group_name = code
+        group_name = content.get("code")
+        self.group_name = group_name
 
         try:
-            targetGame = await sync_to_async(Game.objects.get, thread_sensitive=True)(inviteCode=code)
+            targetGame = await sync_to_async(Game.objects.get, thread_sensitive=True)(inviteCode=group_name)
+            self.groups.append(group_name)
+
+            await self.channel_layer.group_add(
+                group_name,
+                self.channel_name,
+            )
             await self.send_json({"status is": targetGame.status})
         except: 
             await self.send_json({"error": "game not found"})
