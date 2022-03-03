@@ -27,3 +27,4 @@ sqlparse==0.4.2
 urllib3==1.26.7
 zipp==3.6.0
 channels==3.0.4
+channels-redis==3.3.1
