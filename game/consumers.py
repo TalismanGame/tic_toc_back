@@ -9,7 +9,6 @@ from .models import Game
 from asgiref.sync import sync_to_async
 
 
-
 #*********** question here I should define game status and echos it whenever it changed ********
 class GameStatusConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
@@ -33,6 +32,7 @@ class GameStatusConsumer(AsyncJsonWebsocketConsumer):
 
     async def receive_json(self, content, **kwargs):
         code = content["code"]
+        self.group_name = code
 
         try:
             targetGame = await sync_to_async(Game.objects.get, thread_sensitive=True)(inviteCode=code)
@@ -41,8 +41,8 @@ class GameStatusConsumer(AsyncJsonWebsocketConsumer):
             await self.send_json({"error": "game not found"})
             await self.close()
 
-    async def echo(self, event):
-        await self.send_json(event["content"])
-
     async def disconnect(self, close_code):
         pass
+    
+    async def echo(self, event):
+        await self.send_json(event["content"])
