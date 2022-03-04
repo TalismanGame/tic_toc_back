@@ -6,7 +6,7 @@ from .serializers import CreateGameSerializer, JoinGameSerializer, GetGameDataSe
 from rest_framework.response import Response
 from .utils import GenerateInviteCode
 from django.shortcuts import get_object_or_404
-from .echoes import echo_when_game_status_updated
+from .echoes import echo_when_game_status_updated, echo_when_game_data_update
 from asgiref.sync import async_to_sync
 
 # Create your views here.
@@ -121,7 +121,24 @@ class UpdateGameData(viewsets.ModelViewSet):
         targetGame.winner = winner
         targetGame.winCondition = winCondition
         targetGame.status = gameStatus
+
         targetGame.save()
+
+        async_to_sync(echo_when_game_data_update)(
+            data={
+                "inviteCode": inviteCode,
+                "gameBoard": board,
+                "nextPlayer": nextPlayer,
+                "winner": winner,
+                "winCondition": winCondition,
+                "status": gameStatus,
+                "playerO": targetGame.playerO.alias,
+                "playerX": targetGame.playerX.alias,
+                "oState": targetGame.oState,
+                "xState": targetGame.xState
+            }
+        )
+
         return Response({
             'message': 'game updated! as hell',
         }, status.HTTP_200_OK)
