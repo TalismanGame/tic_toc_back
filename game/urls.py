@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import CreateGameView, JoinGameView, GameStateView, GetGameDataView, UpdateGameData, LeaveGameView
+from .views import CreateGameView, JoinGameView, GetGameDataView, UpdateGameData, LeaveGameView
 
 urlpatterns = [
     path('game/create-new', CreateGameView.as_view({'post': 'create'}), name='create-new-game'),
@@ -29,8 +29,11 @@ urlpatterns = [
     # )
     # def retrieve(self, *args, **kwargs):
     #     instrument_symbol = kwargs.get("symbol", None)
-    path('game/status/<str:code>/', GameStateView.as_view({'get': 'retrieve'}), name='get-game-status'),
+    
     path('game/data/<str:code>/', GetGameDataView.as_view({'get': 'retrieve'}), name='get-game-all-data'),
     path('game/update', UpdateGameData.as_view({'put': 'update'}), name='update-game-data'),
     path('game/leave', LeaveGameView.as_view({'put': 'update'}), name='leave-the-game'),
+
+    # ***** comment this out just for learning purposes *****
+    # path('game/status/<str:code>/', GameStateView.as_view({'get': 'retrieve'}), name='get-game-status'),
 ]
