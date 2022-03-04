@@ -127,18 +127,16 @@ class UpdateGameData(viewsets.ModelViewSet):
         }, status.HTTP_200_OK)
 
 
-# this view get last status of a game. So as Im handling though websocket im going to comment this out for now 
-# and just let it be here for learning purposes.
-# class GameStateView(viewsets.ModelViewSet):
-#     permission_classes = [permissions.IsAuthenticated]
+class GameStateView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
 
-#     def retrieve(self, request, *args, **kwargs):
-#         inviteCode = kwargs.get("code", None)
-#         targetGame = get_object_or_404(Game, inviteCode=inviteCode)
+    def retrieve(self, request, *args, **kwargs):
+        inviteCode = kwargs.get("code", None)
+        targetGame = get_object_or_404(Game, inviteCode=inviteCode)
 
-#         return Response({
-#             "status": targetGame.status
-#         }, status.HTTP_200_OK)
+        return Response({
+            "status": targetGame.status
+        }, status.HTTP_200_OK)
 
 class GetGameDataView(viewsets.ModelViewSet):
     serializer_class = GetGameDataSerializer
