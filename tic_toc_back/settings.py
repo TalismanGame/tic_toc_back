@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-r#vhz2_qzlrffusmxj@s5h+@ty%0l8(kkvp4@!h$iedg^yyd29
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['194.5.192.251', 'localhost']
+ALLOWED_HOSTS = ['130.185.121.141', 'localhost']
 
 # Application definition
 
@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
 
-    "rest_framework",
+    'rest_framework',
     "rest_framework.authtoken",
     'django_extensions',
+    'channels',
 
     'user',
     'game'
@@ -76,12 +77,12 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000', 
-    'http://194.5.192.251:8000'
+    'http://130.185.121.141:8000'
 ] 
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:3000',
-    'http://194.5.192.251:8000'
+    'http://130.185.121.141:8000'
 ]
 
 ROOT_URLCONF = 'tic_toc_back.urls'
@@ -104,7 +105,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tic_toc_back.wsgi.application'
 
-
+# ******** question As i add asgi here should wsgi remain or what? ********
+ASGI_APPLICATION = "tic_toc_back.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

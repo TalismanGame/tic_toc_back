@@ -6,7 +6,8 @@ from .serializers import CreateGameSerializer, JoinGameSerializer, GetGameDataSe
 from rest_framework.response import Response
 from .utils import GenerateInviteCode
 from django.shortcuts import get_object_or_404
-
+from .echoes import echo_when_game_status_updated, echo_when_game_data_update
+from asgiref.sync import async_to_sync
 
 # Create your views here.
 
@@ -37,6 +38,9 @@ class JoinGameView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     #this is not working. it should update game model and make it ready to start the game. 
     # ********* the logic I have to use is witten on board! :) ********* #
+
+    
+
     def update(self, request, *args, **kwargs):
         # ******** question?? why do write queryset. how it helps us???? *******
         # queryset = Game.objects.all()
@@ -60,9 +64,12 @@ class JoinGameView(viewsets.ModelViewSet):
         targetGame.playerO = myPlayerName
         targetGame.oState = Player.JOINED
         targetGame.status = Game.READY
-
-        targetGame.save()
         
+        targetGame.save()
+
+        async_to_sync(echo_when_game_status_updated)(
+            data={"code": inviteCode, "gameStatus": Game.READY}
+        )
         # ******** question?? how to send game data in response??? *******
         return Response({
             'message': 'game started!',
@@ -114,7 +121,24 @@ class UpdateGameData(viewsets.ModelViewSet):
         targetGame.winner = winner
         targetGame.winCondition = winCondition
         targetGame.status = gameStatus
+
         targetGame.save()
+
+        async_to_sync(echo_when_game_data_update)(
+            data={
+                "inviteCode": inviteCode,
+                "gameBoard": board,
+                "nextPlayer": nextPlayer,
+                "winner": winner,
+                "winCondition": winCondition,
+                "status": gameStatus,
+                "playerO": targetGame.playerO.alias,
+                "playerX": targetGame.playerX.alias,
+                "oState": targetGame.oState,
+                "xState": targetGame.xState
+            }
+        )
+
         return Response({
             'message': 'game updated! as hell',
         }, status.HTTP_200_OK)
