@@ -27,7 +27,13 @@ SECRET_KEY = 'django-insecure-r#vhz2_qzlrffusmxj@s5h+@ty%0l8(kkvp4@!h$iedg^yyd29
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['130.185.120.108', 'localhost']
+
+# allow some hosts with white list refer to this link => https://dzone.com/articles/how-to-fix-django-cors-error#:~:text=One%20of%20the%20common%20errors,with%20a%20bunch%20of%20securities. 
+# ALLOWED_HOSTS = ['130.185.120.108', 'localhost']
+
+# get rid out of all cors. 
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
