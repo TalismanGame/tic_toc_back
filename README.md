@@ -19,3 +19,5 @@ Open [http://localhost:8000/admin](http://localhost:8000/admin) to view it in th
 
 The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings.
+
+follow up digitalocean for deployment
