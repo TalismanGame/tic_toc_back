@@ -43,7 +43,7 @@ class GameStatusConsumer(AsyncJsonWebsocketConsumer):
                 group_name,
                 self.channel_name,
             )
-            await self.send_json({"status is": targetGame.winner})
+            await self.send_json({"payload": targetGame.winner})
         except: 
             await self.send_json({"error": "game not found"})
             await self.close()

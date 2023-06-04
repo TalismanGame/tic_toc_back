@@ -32,7 +32,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ['130.185.120.108', 'localhost']
 
 # get rid out of all cors. 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['api.talismangame.ir','localhost', '46.101.208.155']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
