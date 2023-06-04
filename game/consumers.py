@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import json
 import logging
 from channels.consumer import AsyncConsumer
@@ -9,6 +10,7 @@ from asgiref.sync import async_to_sync
 from .models import Game
 from asgiref.sync import sync_to_async
 
+logger = logging.getLogger(__name__)
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +49,8 @@ class GameStatusConsumer(AsyncJsonWebsocketConsumer):
                 self.channel_name,
             )
             await self.send_json({"payload": targetGame.winner})
-        except: 
+        except Exception as error: 
+            logger.exception(error)
             await self.send_json({"error": "game not found"})
             await self.close()
 
