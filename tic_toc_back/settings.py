@@ -32,7 +32,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ['130.185.120.108', 'localhost']
 
 # get rid out of all cors. 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['api.talismangame.ir','localhost', '46.101.208.155']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -174,7 +174,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 import os
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
