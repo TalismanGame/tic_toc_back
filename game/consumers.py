@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import json
 from channels.consumer import AsyncConsumer
 from channels.generic.websocket import WebsocketConsumer, AsyncJsonWebsocketConsumer
@@ -8,6 +9,7 @@ from asgiref.sync import async_to_sync
 from .models import Game
 from asgiref.sync import sync_to_async
 
+logger = logging.getLogger(__name__)
 
 #*********** question here I should define game status and echos it whenever it changed ********
 class GameStatusConsumer(AsyncJsonWebsocketConsumer):
@@ -44,7 +46,8 @@ class GameStatusConsumer(AsyncJsonWebsocketConsumer):
                 self.channel_name,
             )
             await self.send_json({"payload": targetGame.winner})
-        except: 
+        except Exception as error: 
+            logger.exception(error)
             await self.send_json({"error": "game not found"})
             await self.close()
 
@@ -90,7 +93,8 @@ class GameDataConsumer(AsyncJsonWebsocketConsumer):
                 self.channel_name,
             )
             await self.send_json({"status": targetGame.status})
-        except: 
+        except Exception as error: 
+            logger.exception(error)
             await self.send_json({"error": "game not found"})
             await self.close()
 
